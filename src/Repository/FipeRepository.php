@@ -20,6 +20,38 @@ class FipeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Fipe::class);
     }
+    
+    /**
+     * Adiciona ao banco de dados.
+     *
+     * @param  mixed $entity
+     * @param  mixed $flush
+     * @return void
+     */
+    public function add(Fipe $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * Remove do banco de dados.
+     *
+     * @param  mixed $entity
+     * @param  mixed $flush
+     * @return void
+     */
+    public function remove(Fipe $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+        
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 
 //    /**
 //     * @return Fipe[] Returns an array of Fipe objects

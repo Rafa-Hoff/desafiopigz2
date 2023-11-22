@@ -3,6 +3,8 @@ version: '3'
 services:
 ###> doctrine/doctrine-bundle ###
   database:
+    ports:
+      - "8080:80"
     image: postgres:${POSTGRES_VERSION:-15}-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}

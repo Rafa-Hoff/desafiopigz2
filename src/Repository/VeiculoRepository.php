@@ -20,6 +20,38 @@ class VeiculoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Veiculo::class);
     }
+    
+    /**
+     * Adiciona ao banco de dados.
+     *
+     * @param  mixed $entity
+     * @param  mixed $flush
+     * @return void
+     */
+    public function add(Veiculo $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * Remove do banco de dados.
+     *
+     * @param  mixed $entity
+     * @param  mixed $flush
+     * @return void
+     */
+    public function remove(Veiculo $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+        
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 
 //    /**
 //     * @return Veiculo[] Returns an array of Veiculo objects

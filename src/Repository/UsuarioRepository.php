@@ -38,6 +38,38 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+    
+    /**
+     * Adiciona ao Banco de dados.
+     *
+     * @param  mixed $entity
+     * @param  mixed $flush
+     * @return void
+     */
+    public function add(Usuario $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+    
+    /**
+     * Remove do banco de dados.
+     *
+     * @param  mixed $entity
+     * @param  mixed $flush
+     * @return void
+     */
+    public function remove(Usuario $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+        
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 
 //    /**
 //     * @return Usuario[] Returns an array of Usuario objects
