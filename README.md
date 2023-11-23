@@ -30,3 +30,5 @@ OBS.: Não foi utilizado o DOCKER no desenvolvimento.
 ### Nivel de Acesso em Funcionamento:
 ![Nível de Acesso](https://github.com/Rafa-Hoff/assests/blob/main/DesafioPigz/NiveisDeAcessoFuncional.png)
 
+# Author
+Rafael Hoffmann do Amaral
