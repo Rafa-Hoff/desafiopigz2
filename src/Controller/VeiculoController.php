@@ -14,6 +14,25 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class VeiculoController extends AbstractController
 {
+
+        /**
+     * Retorna os veiculos disponiveis para venda.
+     *
+     * @param  mixed $veiculoRepository
+     * @return JsonResponse
+     */
+    #[Route('/veiculos/disponiveis', name: 'veiculos_lista_dispo', methods: ['GET'])]
+    public function veiculosDisponiveis(VeiculoRepository $veiculoRepository): JsonResponse
+    {
+        //Veiculos disponiveis então atribuidos a variavel disponivel da tabela, (disponivel = true), (indisponivel = false).
+        $veiculos = $veiculoRepository->findBy(['disponivel' => true]);
+
+        return $this->json([
+            'message' => 'Veiculos disponiveis para venda:',
+            'data' => $veiculos
+        ]);
+    }
+
     /**
      * Retorna todos os veiculos do banco de dados.
      *
@@ -126,24 +145,6 @@ class VeiculoController extends AbstractController
     }
     
     /**
-     * Retorna os veiculos disponiveis para venda.
-     *
-     * @param  mixed $veiculoRepository
-     * @return JsonResponse
-     */
-    #[Route('/veiculos/disponiveis', name: 'veiculos_lista_dispo', methods: ['GET'])]
-    public function veiculosDisponiveis(VeiculoRepository $veiculoRepository): JsonResponse
-    {
-        //Veiculos disponiveis então atribuidos a variavel disponivel da tabela, (disponivel = true), (indisponivel = false).
-        $veiculos = $veiculoRepository->findBy(['disponivel' => true]);
-
-        return $this->json([
-            'message' => 'Veiculos disponiveis para venda:',
-            'data' => $veiculos
-        ]);
-    }
-    
-    /**
      * Comparador de preços - irá receber o fabricante, modelo
      * e ano como parâmetros para comparar o valor com a Fipe.
      *
@@ -162,11 +163,18 @@ class VeiculoController extends AbstractController
         //filtra na tabela Fipe utilizando os dados informados, e armazena o preço do veiculo encontrado na variável $fipe.
         $fipe = $fipeRepository->findOneBy(['fabricante' => $fabricante,'modelo' => $modelo, 'ano' => $ano])->getPreco();
 
-        //retorna o veiculo encontrado com o preço original e o preço da tabela Fipe.
+        $precoVeiculo = $veiculosRepository->findOneBy(['fabricante' => $fabricante,'modelo' => $modelo, 'ano' => $ano])->getPreco();
+        $calculo = ($precoVeiculo - $fipe);
+        if ($calculo < 0) {
+            $calculo *= -1;
+        }
+
+        //retorna o veiculo encontrado com o preço original, o preço da tabela Fipe e a diferenca.
         return $this->json([
             'message' => 'Comparador de preco.',
             'data' => $veiculo,
-            'Preco Tabela FIPE' => $fipe
+            'Preco Tabela FIPE' => $fipe,
+            'Diferenca de preco' => $calculo
         ]);
     }
 }
