@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VeiculoController extends AbstractController
 {
-
     /**
      * Retorna todos os veiculos do banco de dados.
      *
