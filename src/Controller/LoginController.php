@@ -11,6 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LoginController extends AbstractController
 {
+        
+    /**
+     * Cria Usuario.
+     *
+     * @param  mixed $request
+     * @param  mixed $usuarioRepository
+     * @return JsonResponse
+     */
     #[Route('/usuario/criar', name: 'usuario_criar')]
     public function createUsuario(Request $request, UsuarioRepository $usuarioRepository): JsonResponse
     {
@@ -30,7 +38,14 @@ class LoginController extends AbstractController
             'data' => $usuario->getEmail()
         ]);
     }
-
+    
+    /**
+     * Deleta Usuario.
+     *
+     * @param  mixed $id
+     * @param  mixed $usuarioRepository
+     * @return JsonResponse
+     */
     #[Route('/usuario/deletar', name: 'usuario_delete')]
     public function deleteUsuario(int $id, UsuarioRepository $usuarioRepository): JsonResponse
     {

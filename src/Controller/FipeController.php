@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class FipeController extends AbstractController
 {
@@ -53,6 +54,7 @@ class FipeController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/fipe/inserir', name: 'fipe_veiculos_inserir', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function createVeiculosFipe(Request $request, FipeRepository $fipeRepository): JsonResponse
     {
         $data = $request->request->all();
@@ -81,6 +83,7 @@ class FipeController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/fipe/update/{id}', name: 'fipe_veiculos_update', methods: ['PUT', 'PATCH'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function updateVeiculosFipe(int $id, Request $request, ManagerRegistry $doctrine, FipeRepository $fipeRepository): JsonResponse
     {
         $data = $request->request->all();
@@ -107,6 +110,7 @@ class FipeController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/fipe/deletar/{id}', name: 'fipe_veiculos_deletar', methods: ['DELETE'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function deleteVeiculosFipe(int $id, FipeRepository $fipeRepository): JsonResponse
     {
         $veiculo = $fipeRepository->find($id);

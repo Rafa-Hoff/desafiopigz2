@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class VeiculoController extends AbstractController
 {
@@ -54,6 +55,7 @@ class VeiculoController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/veiculos/inserir', name: 'veiculos_inserir', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function createVeiculos(Request $request, VeiculoRepository $veiculosRepository): JsonResponse
     {
         $data = $request->request->all();
@@ -83,6 +85,7 @@ class VeiculoController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/veiculos/update/{id}', name: 'veiculos_update', methods: ['PUT', 'PATCH'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function updateVeiculos(int $id, Request $request, ManagerRegistry $doctrine, VeiculoRepository $veiculosRepository): JsonResponse
     {
         $data = $request->request->all();
@@ -110,6 +113,7 @@ class VeiculoController extends AbstractController
      * @return JsonResponse
      */
     #[Route('/veiculos/deletar/{id}', name: 'veiculos_deletar', methods: ['DELETE'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function deleteVeiculos(int $id, VeiculoRepository $veiculosRepository): JsonResponse
     {
         $veiculo = $veiculosRepository->find($id);
